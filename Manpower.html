@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manpower</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+      }
+
+      .nav-tabs .nav-link {
+        color: #495057;
+      }
+
+      .nav-tabs .nav-link.active {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+
+      .nav-tabs .nav-link:hover {
+        color: #0056b3;
+      }
+
+      .container {
+        margin-top: 20px;
+      }
+
+      h2 {
+        color: #007bff;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        box-sizing: border-box;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+      }
+
+      .btn {
+        margin-right: 10px;
+      }
+
+      .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+      }
+
+      .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+      }
+
+      .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+      }
+
+      .btn-warning:hover {
+        background-color: #e0a800;
+        border-color: #d39e00;
+      }
+
+      .response {
+        padding: 10px;
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+      }
+
+      table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+      }
+
+      table th,
+      table td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #dee2e6;
+      }
+
+      table th {
+        background-color: #007bff;
+        color: #fff;
+      }
+
+      table tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .filter-input {
+        width: 100%;
+        padding: 5px;
+        margin-top: 5px;
+        box-sizing: border-box;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+      }
+
+      .dropdown {
+        background-color: #ffc107;
+        padding: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        border-radius: 5px;
+      }
+
+      .dropdown label {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      .dropdown select {
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+      }
+
+      .dropdown select:hover {
+        border-color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dropdown bg-warning p-2 mb-2 text-center">
+      <label for="envSelect">Environment:</label>
+      <select id="envSelect">
+        <option value="dev">Development</option>
+        <option value="prod">Production</option>
+      </select>
+    </div>
+
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-0" role="tab" aria-controls="simple-tabpanel-0" aria-selected="true"><strong>CDMS</strong></a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="simple-tab-1" data-bs-toggle="tab" href="#simple-tabpanel-1" role="tab" aria-controls="simple-tabpanel-1" aria-selected="false"><strong>SAP</strong></a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="simple-tab-2" data-bs-toggle="tab" href="#simple-tabpanel-2" role="tab" aria-controls="simple-tabpanel-2" aria-selected="false"><strong>STAGING</strong></a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="simple-tab-3" data-bs-toggle="tab" href="#simple-tabpanel-3" role="tab" aria-controls="simple-tabpanel-3" aria-selected="false"><strong>FINAL</strong></a>
+      </li>
+    </ul>
+    <div class="tab-content p-3" id="tab-content">
+      <div class="tab-pane active" id="simple-tabpanel-0" role="tabpanel" aria-labelledby="simple-tab-0">
+        Yet to be configured
+      </div>
+      <div class="tab-pane" id="simple-tabpanel-1" role="tabpanel" aria-labelledby="simple-tab-1">
+        <div id="sap" class="container">
+          <h2>SAP</h2>
+          <input type="text" id="dealerCodeS" placeholder="Dealer Code" />
+          <button class="btn btn-success fetchData" data-type="sap">Fetch Data</button>
+          <button class="btn btn-warning clear" data-target="#dealerCodeS, #responseBoxS">Clear</button>
+          <div style="margin-top: 5px" class="response" id="responseBoxS">
+            Response will appear here...
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="simple-tabpanel-2" role="tabpanel" aria-labelledby="simple-tab-2">
+        Staging
+      </div>
+      <div class="tab-pane" id="simple-tabpanel-3" role="tabpanel" aria-labelledby="simple-tab-3">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-new" role="tab" aria-controls="simple-tabpanel-new" aria-selected="true">NEW</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-updt" role="tab" aria-controls="simple-tabpanel-updt" aria-selected="false">UPDATE</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-terminated" role="tab" aria-controls="simple-tabpanel-terminated" aria-selected="false">TERMINATED</a>
+          </li>
+        </ul>
+        <div class="tab-content p-3" id="tab-content">
+          <div class="tab-pane active" id="simple-tabpanel-new" role="tabpanel" aria-labelledby="simple-tab-new">
+            <div id="new" class="container">
+              <h2>New</h2>
+              <input type="text" id="mobileNumber" placeholder="Mobile Number" />
+              <button class="btn btn-success fetchData" data-type="new">Fetch Data</button>
+              <button class="btn btn-warning clear" data-target="#mobileNumber, #responseBox">Clear</button>
+              <div style="margin-top: 5px" class="response" id="responseBox">
+                Response will appear here...
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="simple-tabpanel-updt" role="tabpanel" aria-labelledby="simple-tab-updt">
+            <div id="updt" class="container">
+              <h2>Update</h2>
+              <input type="text" id="mobileNumberU" placeholder="Mobile Number" />
+              <button class="btn btn-success fetchData" data-type="updt">Fetch Data</button>
+              <button class="btn btn-warning clear" data-target="#mobileNumberU, #responseBoxU">Clear</button>
+              <div style="margin-top: 5px" class="response" id="responseBoxU">
+                Response will appear here...
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="simple-tabpanel-terminated" role="tabpanel" aria-labelledby="simple-tab-terminated">
+            <div id="terminated" class="container">
+              <h2>Terminate</h2>
+              <input type="text" id="mobileNumberT" placeholder="Mobile Number" />
+              <button class="btn btn-success fetchData" data-type="terminated">Fetch Data</button>
+              <button class="btn btn-warning clear" data-target="#mobileNumberT, #responseBoxT">Clear</button>
+              <div style="margin-top: 5px" class="response" id="responseBoxT">
+                Response will appear here...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var envHost = {
+        prod: "https://api.bajajauto.com/dwh-sapi",
+        dev: "https://apidev.bajajauto.com/dwh-sapi-dev",
+      };
+
+      $(document).ready(function () {
+        $(".clear").click(function () {
+          var targets = $(this).data("target").split(", ");
+          targets.forEach(function (target) {
+            $(target).val("").html("Response will appear here...");
+          });
+        });
+
+        $("#envSelect").change(function () {
+          var selectedEnv = $(this).val();
+          $(".fetchData").data("host", envHost[selectedEnv]);
+          $(".clear").click();
+        });
+
+        $(".fetchData").click(function () {
+          var type = $(this).data("type");
+          var host = $(this).data("host") || envHost["dev"];
+          var inputId = type === "sap" ? "#dealerCodeS" : "#mobileNumber" + (type === "new" ? "" : type.charAt(0).toUpperCase());
+          var responseBoxId = "#responseBox" + (type === "new" ? "" : type.charAt(0).toUpperCase());
+          var inputValue = $(inputId).val();
+          var query = getQuery(type, inputValue);
+
+          fetchData(host, query, responseBoxId);
+        });
+
+        function getQuery(type, value) {
+          switch (type) {
+            case "new":
+              return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, MPM_Key_Id FROM MPM_CDMS_LSQ_DATA_NEW WHERE Mobile_10_D_Number IN ('" + value + "')";
+            case "updt":
+              return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, MPM_Key_Id FROM MPM_CDMS_LSQ_DATA_UPDT WHERE Mobile_10_D_Number IN ('" + value + "')";
+            case "terminated":
+              return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, Termination_Date, MPM_Key_Id FROM MPM_CDMS_LSQ_TERMINATED WHERE Mobile_10_D_Number IN ('" + value + "')";
+            case "sap":
+              return "SELECT SAL_HUB, HUB, KUNNR as DealerCode FROM SAP_ZSD_DEALER_REPOS WHERE KUNNR IN ('" + value + "')";
+            default:
+              return "";
+          }
+        }
+
+        function fetchData(host, query, responseBoxId) {
+          var requestData = {
+            query: query,
+            message: "DEV DATA",
+          };
+
+          $.ajax({
+            url: host + "/api/v1/get-data",
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify(requestData),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                var table = "<table class='table' border=0><thead><tr>";
+                var filterRow = "<tr>";
+
+                Object.keys(data[0]).forEach((key, index) => {
+                  table += "<th>" + key + "<br><input type='text' class='filter-input' data-index='" + index + "' placeholder='Search...'></th>";
+                  filterRow += "<td></td>"; // For maintaining structure
+                });
+
+                table += "</tr></thead><tbody>";
+                data.forEach((row) => {
+                  table += "<tr>";
+                  Object.values(row).forEach((value) => {
+                    table += "<td>" + value + "</td>";
+                  });
+                  table += "</tr>";
+                });
+                table += "</tbody></table>";
+                $(responseBoxId).html(table);
+
+                // Filtering logic
+                $(".filter-input").on("keyup", function () {
+                  var columnIndex = $(this).data("index");
+                  var filterValue = $(this).val().toLowerCase();
+
+                  $("tbody tr").each(function () {
+                    var cellText = $(this).find("td").eq(columnIndex).text().toLowerCase();
+                    $(this).toggle(cellText.indexOf(filterValue) > -1);
+                  });
+                });
+              } else {
+                $(responseBoxId).html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              $(responseBoxId).html('<span style="color:red;">Error fetching data: ' + error + "</span>");
+            },
+          });
+        }
+      });
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
