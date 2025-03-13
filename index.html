@@ -157,6 +157,9 @@
       <li class="nav-item" role="presentation">
         <a class="nav-link" id="simple-tab-3" data-bs-toggle="tab" href="#simple-tabpanel-3" role="tab" aria-controls="simple-tabpanel-3" aria-selected="false"><strong>FINAL</strong></a>
       </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="simple-tab-3" data-bs-toggle="tab" href="#simple-tabpanel-4" role="tab" aria-controls="simple-tabpanel-4" aria-selected="false"><strong>CUSTOM</strong></a>
+      </li>
     </ul>
     <div class="tab-content p-3" id="tab-content">
       <div class="tab-pane active" id="simple-tabpanel-0" role="tabpanel" aria-labelledby="simple-tab-0">
@@ -224,6 +227,17 @@
           </div>
         </div>
       </div>
+      <div class="tab-pane" id="simple-tabpanel-4" role="tabpanel" aria-labelledby="simple-tab-4">
+        <div id="sap" class="container">
+          <h2>CUSTOM</h2>
+          <textarea type="text" id="customTect" placeholder="Enter custom query" class="w-100"></textarea>
+          <button class="btn btn-success fetchData" data-type="custom">Fetch Data</button>
+          <button class="btn btn-warning clear" data-target="#responseBoxC">Clear</button>
+          <div style="margin-top: 5px" class="response" id="responseBoxC">
+            Response will appear here...
+          </div>
+        </div>
+      </div>
     </div>
     <script>
       var envHost = {
@@ -266,6 +280,8 @@
               return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, Termination_Date, MPM_Key_Id FROM MPM_CDMS_LSQ_TERMINATED WHERE Mobile_10_D_Number IN ('" + value + "')";
             case "sap":
               return "SELECT SAL_HUB, HUB, KUNNR as DealerCode FROM SAP_ZSD_DEALER_REPOS WHERE KUNNR IN ('" + value + "')";
+            case "custom":
+              return $("#customTect").val();
             default:
               return "";
           }
