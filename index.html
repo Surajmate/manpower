@@ -143,7 +143,6 @@
         <option value="prod">Production</option>
       </select>
     </div>
-
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item" role="presentation">
         <a class="nav-link active" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-0" role="tab" aria-controls="simple-tabpanel-0" aria-selected="true"><strong>CDMS</strong></a>
@@ -177,7 +176,38 @@
         </div>
       </div>
       <div class="tab-pane" id="simple-tabpanel-2" role="tabpanel" aria-labelledby="simple-tab-2">
-        Staging
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="simple-tab-SNU" data-bs-toggle="tab" href="#simple-tabpanel-new-updt-stg" role="tab" aria-controls="simple-tabpanel-new-updt-stg" aria-selected="true">NEW/UPDATE</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" id="simple-tab-ST" data-bs-toggle="tab" href="#simple-tabpanel-terminated-stg" role="tab" aria-controls="simple-tabpanel-terminated-stg" aria-selected="false">TERMINATE</a>
+          </li>
+        </ul>
+        <div class="tab-content p-3" id="tab-content">
+          <div class="tab-pane active" id="simple-tabpanel-new-updt-stg" role="tabpanel" aria-labelledby="simple-tab-new-updt-stg">
+            <div id="new-stg" class="container">
+              <h2>New/Update</h2>
+              <input type="text" id="mobileNumberN" placeholder="Mobile Number" />
+              <button class="btn btn-success fetchData" data-type="new-stg">Fetch Data</button>
+              <button class="btn btn-warning clear" data-target="#mobileNumberN, #responseBoxN">Clear</button>
+              <div style="margin-top: 5px" class="response" id="responseBoxN">
+                Response will appear here...
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="simple-tabpanel-terminated-stg" role="tabpanel" aria-labelledby="simple-tab-terminated-stg">
+            <div id="terminate-stg" class="container">
+              <h2>Terminate</h2>
+              <input type="text" id="mobileNumberG" placeholder="Mobile Number" />
+              <button class="btn btn-success fetchData" data-type="terminateG">Fetch Data</button>
+              <button class="btn btn-warning clear" data-target="#mobileNumberG, #responseBoxG">Clear</button>
+              <div style="margin-top: 5px" class="response" id="responseBoxG">
+                Response will appear here...
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="tab-pane" id="simple-tabpanel-3" role="tabpanel" aria-labelledby="simple-tab-3">
         <ul class="nav nav-tabs" role="tablist">
@@ -188,7 +218,7 @@
             <a class="nav-link" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-updt" role="tab" aria-controls="simple-tabpanel-updt" aria-selected="false">UPDATE</a>
           </li>
           <li class="nav-item" role="presentation">
-            <a class="nav-link" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-terminated" role="tab" aria-controls="simple-tabpanel-terminated" aria-selected="false">TERMINATED</a>
+            <a class="nav-link" id="simple-tab-0" data-bs-toggle="tab" href="#simple-tabpanel-terminated" role="tab" aria-controls="simple-tabpanel-terminated" aria-selected="false">TERMINATE</a>
           </li>
         </ul>
         <div class="tab-content p-3" id="tab-content">
@@ -230,7 +260,7 @@
       <div class="tab-pane" id="simple-tabpanel-4" role="tabpanel" aria-labelledby="simple-tab-4">
         <div id="sap" class="container">
           <h2>CUSTOM</h2>
-          <textarea type="text" id="customTect" placeholder="Enter custom query" class="w-100"></textarea>
+          <textarea type="text" id="customText" placeholder="Enter custom query" class="w-100"></textarea>
           <button class="btn btn-success fetchData" data-type="custom">Fetch Data</button>
           <button class="btn btn-warning clear" data-target="#responseBoxC">Clear</button>
           <div style="margin-top: 5px" class="response" id="responseBoxC">
@@ -262,9 +292,13 @@
         $(".fetchData").click(function () {
           var type = $(this).data("type");
           var host = $(this).data("host") || envHost["dev"];
-          var inputId = type === "sap" ? "#dealerCodeS" : "#mobileNumber" + (type === "new" ? "" : type.charAt(0).toUpperCase());
-          var responseBoxId = "#responseBox" + (type === "new" ? "" : type.charAt(0).toUpperCase());
+          var inputId = type === "sap" ? "#dealerCodeS" : type === "custom" ? "#customText" : "#mobileNumber" + (type === "new" ? "" : type.charAt(0).toUpperCase());
+          var responseBoxId = type === "custom" ? "#responseBoxC" : "#responseBox" + (type === "new" ? "" : type.charAt(0).toUpperCase());
           var inputValue = $(inputId).val();
+          if(inputValue == '' || inputValue == null){
+            alert('Please enter the value');
+            return;
+          }
           var query = getQuery(type, inputValue);
 
           fetchData(host, query, responseBoxId);
@@ -280,8 +314,12 @@
               return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, Termination_Date, MPM_Key_Id FROM MPM_CDMS_LSQ_TERMINATED WHERE Mobile_10_D_Number IN ('" + value + "')";
             case "sap":
               return "SELECT SAL_HUB, HUB, KUNNR as DealerCode FROM SAP_ZSD_DEALER_REPOS WHERE KUNNR IN ('" + value + "')";
+            case "new-stg":
+              return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, MPM_Key_Id FROM MPM_CDMS_LSQ_DATA WHERE Mobile_10_D_Number IN ('" + value + "')";
+            case "terminateG":
+              return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, Termination_Date, MPM_Key_Id FROM MPM_CDMS_LSQ_TERMINATED_STG WHERE Mobile_10_D_Number IN ('" + value + "')";
             case "custom":
-              return $("#customTect").val();
+              return value;
             default:
               return "";
           }
@@ -290,7 +328,7 @@
         function fetchData(host, query, responseBoxId) {
           var requestData = {
             query: query,
-            message: "DEV DATA",
+            message: "MANPOWER DATA",
           };
 
           $.ajax({
