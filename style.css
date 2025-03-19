@@ -191,8 +191,8 @@
     transform-origin: bottom center;
     transform: scaleX(0.3);
     transition: transform var(--transition-duration) ease-out;
-  }
-  
+}
+
   .card:hover .card-accent {
     transform: scaleX(1);
   }
@@ -242,7 +242,7 @@
   /* Theme toggle */
   .theme-toggle {
     position: absolute;
-    top: 1rem;
+    /* top: 1rem; */
     right: 1rem;
     /* background: rgba(255, 255, 255, 0.1); */
     border: none;
