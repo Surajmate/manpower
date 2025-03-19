@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Record Count</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        .card {
+            background-color: #f4f4f4;
+            padding: 5px;
+            margin: 5px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            min-width: 50px;
+            text-align: center;
+            flex: 1;
+        }
+        .count {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="dataContainer">
+        <h3>DWH Count</h3><br>
+        <div class="row">
+            <div class="col-6 col-sm-12">
+                <div class="card" id="card"><h3>NEW UB</h3><p class="count1">Loading...</p></div>
+                <div class="card" id="card"><h3>UPDATE UB</h3><p class="count2">Loading...</p></div>
+                <div class="card" id="card"><h3>TERMINATE UB</h3><p class="count3">Loading...</p></div>
+            </div>
+            <div class="col-6 col-sm-12">
+                <div class="card" id="card"><h3>NEW NON-UB</h3><p class="count4">Loading...</p></div>
+                <div class="card" id="card"><h3>UPDATE NON-UB</h3><p class="count5">Loading...</p></div>
+                <div class="card" id="card"><h3>TERMINATE NON-UB</h3><p class="count6">Loading...</p></div>
+            </div>
+        </div>
+        <h3>Sent to LSQ</h3><br>
+        <div class="row">
+            <div class="card" id="card"><h3>Type C</h3><p class="count7">Loading...</p></div>
+            <div class="card" id="card"><h3>Type D</h3><p class="count8">Loading...</p></div>
+            <div class="card" id="card"><h3>Type C</h3><p class="count9">Loading...</p></div>
+            <div class="card" id="card"><h3>Type D</h3><p class="count10">Loading...</p></div>
+            <div class="card" id="card"><h3>Type C</h3><p class="count11">Loading...</p></div>
+            <div class="card" id="card"><h3>Type D</h3><p class="count12">Loading...</p></div>
+        </div>
+        <h3>Received at LSQ</h3><br>
+        <div class="row">
+            <div class="card" id="card"><h3>Type E</h3><p class="count13">Loading...</p></div>
+            <div class="card" id="card"><h3>Type F</h3><p class="count14">Loading...</p></div>
+            <div class="card" id="card"><h3>Type E</h3><p class="count15">Loading...</p></div>
+            <div class="card" id="card"><h3>Type F</h3><p class="count16">Loading...</p></div>
+            <div class="card" id="card"><h3>Type E</h3><p class="count17">Loading...</p></div>
+            <div class="card" id="card"><h3>Type F</h3><p class="count18">Loading...</p></div>
+        </div>
+    </div>
+    
+    <script>
+        const apiUrls = [
+            "https://api.example.com/typeA",
+            "https://api.example.com/typeB",
+            "https://api.example.com/typeC",
+            "https://api.example.com/typeD",
+            "https://api.example.com/typeE",
+            "https://api.example.com/typeF"
+        ];
+
+        function fetchData() {
+            // apiUrls.forEach((url, index) => {
+            //     $.ajax({
+            //         url: url,
+            //         method: "GET",
+            //         success: function(response) {
+            //             $(`#card${index + 1} .count`).text(response.count);
+            //         },
+            //         error: function() {
+            //             $(`#card${index + 1} .count`).text("Error");
+            //         }
+            //     });
+            // });
+        }
+        
+        $(document).ready(function() {
+            fetchData();
+        });
+    </script>
+</body>
+</html>
