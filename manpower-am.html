@@ -15,9 +15,9 @@
   </head>
   <body style="font-size: 12px !important;">
     <h3 class="mt-2" style="text-align: center;">Manpower Analysis</h3>
-    <div id="spinner" class="spinner-border text-primary" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
+    <!-- <div id="spinner" class="spinner-border text-primary" role="status">
+      <span class="sr-only"></span>
+    </div> -->
     <div class="dropdown bgCustom p-2 mb-2 text-center">
       <label for="envSelect">Environment:</label>
       <select id="envSelect">
@@ -203,7 +203,7 @@
             case "terminated":
               return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, Termination_Date, MPM_Key_Id FROM MPM_CDMS_LSQ_TERMINATED WHERE Mobile_10_D_Number IN ('" + value + "')";
             case "sap":
-              return "SELECT SAL_HUB, HUB, KUNNR, EMAIL as [Sales ASM Email] as DealerCode FROM SAP_ZSD_DEALER_REPOS WHERE KUNNR IN ('" + value + "')";
+              return "SELECT SAL_HUB, HUB, KUNNR as DealerCode, EMAIL as [Sales ASM Email] FROM SAP_ZSD_DEALER_REPOS WHERE KUNNR IN ('" + value + "')";
             case "new-stg":
               return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, MPM_Key_Id FROM MPM_CDMS_LSQ_DATA WHERE Mobile_10_D_Number IN ('" + value + "')";
             case "terminateG":
