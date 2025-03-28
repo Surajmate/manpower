@@ -71,7 +71,7 @@
             <a class="nav-link active" id="simple-tab-SNU" data-bs-toggle="tab" href="#simple-tabpanel-new-updt-stg" role="tab" aria-controls="simple-tabpanel-new-updt-stg" aria-selected="true">NEW/UPDATE</a>
           </li>
           <li class="nav-item" role="presentation">
-            <a class="nav-link" id="simple-tab-ST" data-bs-toggle="tab" href="#simple-tabpanel-terminated-stg" role="tab" aria-controls="simple-tabpanel-terminated-stg" aria-selected="false">TERMINATE</a>
+            <a class="nav-link" id="simple-tab-ST" data-bs-toggle="tab" href="#simple-tabpanel-terminatestg" role="tab" aria-controls="simple-tabpanel-terminatestg" aria-selected="false">TERMINATE</a>
           </li>
         </ul>
         <div class="tab-content p-3" id="tab-content">
@@ -86,13 +86,13 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane" id="simple-tabpanel-terminated-stg" role="tabpanel" aria-labelledby="simple-tab-terminated-stg">
-            <div id="terminate-stg" class="container">
+          <div class="tab-pane" id="simple-tabpanel-terminatestg" role="tabpanel" aria-labelledby="simple-tab-terminatestg">
+            <div id="terminatestg" class="container">
               <h2>Terminate</h2>
-              <input type="text" id="mobileNumberG" placeholder="Mobile Number" />
-              <button class="btn btn-success fetchData" data-type="terminatedG">Fetch Data</button>
-              <button class="btn btn-warning clear" data-target="#mobileNumberG, #responseBoxG">Clear</button>
-              <div style="margin-top: 5px" class="response" id="responseBoxG">
+              <input type="text" id="mobileNumberT" placeholder="Mobile Number" />
+              <button class="btn btn-success fetchData" data-type="terminatestG">Fetch Data</button>
+              <button class="btn btn-warning clear" data-target="#mobileNumberT, #responseBoxT">Clear</button>
+              <div style="margin-top: 5px" class="response" id="responseBoxT">
                 Response will appear here...
               </div>
             </div>
@@ -183,6 +183,7 @@
           var type = $(this).data("type");
           var host = $(this).data("host") || envHost["dev"];
           var inputId = type === "sap" ? "#dealerCodeS" : type === "custom" ? "#customText" : "#mobileNumber" + (type === "new" ? "" : type.charAt(0).toUpperCase());
+          console.log('data-> ', inputId)
           var responseBoxId = type === "custom" ? "#responseBoxC" : "#responseBox" + (type === "new" ? "" : type.charAt(0).toUpperCase());
           var inputValue = $(inputId).val();
           if(inputValue == '' || inputValue == null){
@@ -206,10 +207,10 @@
               return "SELECT SAL_HUB, HUB, KUNNR as DealerCode, EMAIL as [Sales ASM Email] FROM SAP_ZSD_DEALER_REPOS WHERE KUNNR IN ('" + value + "')";
             case "new-stg":
               return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, MPM_Key_Id FROM MPM_CDMS_LSQ_DATA WHERE Mobile_10_D_Number IN ('" + value + "')";
-            case "terminatedG":
+            case "terminatestG":
               return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, Termination_Date, MPM_Key_Id FROM MPM_CDMS_LSQ_TERMINATED_STG WHERE Mobile_10_D_Number IN ('" + value + "')";
             case "cdms":
-              return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, Termination_Date, MPM_Key_Id FROM MPM_CDMS_LSQ_TERMINATED_STG WHERE Mobile_10_D_Number IN ('" + value + "')";
+              return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, Termination_Date, MPM_Key_Id FROM MPM_CDMS_LSQ_DATA WHERE Mobile_10_D_Number IN ('" + value + "')";
             case "custom":
               return value;
             default:
