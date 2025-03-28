@@ -49,7 +49,7 @@
     position: relative;
     perspective: 1000px;
     width: 100%;
-    max-width: calc(3 * (var(--card-size) + var(--card-spacing)) + var(--card-spacing));
+    /* max-width: calc(3 * (var(--card-size) + var(--card-spacing)) + var(--card-spacing)); */
   }
   
   .card-grid {

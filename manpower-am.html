@@ -90,7 +90,7 @@
             <div id="terminate-stg" class="container">
               <h2>Terminate</h2>
               <input type="text" id="mobileNumberG" placeholder="Mobile Number" />
-              <button class="btn btn-success fetchData" data-type="terminateG">Fetch Data</button>
+              <button class="btn btn-success fetchData" data-type="terminatedG">Fetch Data</button>
               <button class="btn btn-warning clear" data-target="#mobileNumberG, #responseBoxG">Clear</button>
               <div style="margin-top: 5px" class="response" id="responseBoxG">
                 Response will appear here...
@@ -206,7 +206,7 @@
               return "SELECT SAL_HUB, HUB, KUNNR as DealerCode, EMAIL as [Sales ASM Email] FROM SAP_ZSD_DEALER_REPOS WHERE KUNNR IN ('" + value + "')";
             case "new-stg":
               return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, MPM_Key_Id FROM MPM_CDMS_LSQ_DATA WHERE Mobile_10_D_Number IN ('" + value + "')";
-            case "terminateG":
+            case "terminatedG":
               return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, Termination_Date, MPM_Key_Id FROM MPM_CDMS_LSQ_TERMINATED_STG WHERE Mobile_10_D_Number IN ('" + value + "')";
             case "cdms":
               return "SELECT Branch_City, CDMS_Hub_Name, CDMS_BU, CDMS_Branch_Name, IsLSQLive, [Sales ASM Email], DATALOADTIME, Termination_Date, MPM_Key_Id FROM MPM_CDMS_LSQ_TERMINATED_STG WHERE Mobile_10_D_Number IN ('" + value + "')";
