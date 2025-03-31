@@ -13,6 +13,10 @@
     />
     <link rel="stylesheet" href="style.css" />
     <style>
+      td{
+        height: 55px !important;
+      }
+      
       .collapsible {
         background-color: #777;
         color: white;
@@ -41,128 +45,538 @@
         background-color: #f1f1f1;
         padding: 30px;
         text-align: center;
-        }
+      }
 
-        #navbar {
+      #navbar {
         position: sticky;
         top: 0;
         overflow: hidden;
         background-color: #333;
         padding: 10px;
-        }
+      }
 
-        #navbar input[type="date"] {
+      #navbar input[type="date"] {
         padding: 10px;
         font-size: 17px;
-        }
+      }
     </style>
   </head>
-  <body >
+  <body>
     <div class="header">
-    <h3>Daily Reports</h3>
+      <h3>Daily Reports</h3>
     </div>
-    
+
+    <div class="dropdown bgCustom p-2 mb-2 text-center">
+      <label for="envSelect">Environment:</label>
+      <select id="envSelect">
+        <option value="dev">Development</option>
+        <option value="prod">Production</option>
+      </select>
+    </div>
+
     <div id="navbar">
-    <input type="date" id="datepicker" style="float: right;"/>
+      <input type="date" id="datepicker" style="float: right;" />
     </div>
+
     <div class="p-3">
-        <button type="button" class="collapsible">Manpower</button>
-        <div class="content p-2">
-          <div style="overflow-x: auto">
-            <strong>DWH FINAL TABLE</strong>
-            <table>
-              <tr>
-                <th>BU</th>
-                <th>NEW</th>
-                <th>UPDATE</th>
-                <th>TERMINATE</th>
-              </tr>
-              <tr>
-                <td>UB</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-              </tr>
-              <tr>
-                <td>NON-UB</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-              </tr>
-            </table>
-            <br/>
-            <strong>PUSHED TO LSQ</strong>
-            <table>
-              <tr>
-                <th>BU</th>
-                <th>NEW</th>
-                <th>UPDATE</th>
-                <th>TERMINATE</th>
-              </tr>
-              <tr>
-                <td>UB</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-              </tr>
-              <tr>
-                <td>NON-UB</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-    
-        <button type="button" class="collapsible mt-2">RSA</button>
-        <div class="content p-2">
-          <div style="overflow-x: auto">
-            <table>
-              <tr>
-                <th>BU</th>
-                <th>NEW</th>
-                <th>UPDATE</th>
-                <th>TERMINATE</th>
-              </tr>
-              <tr>
-                <td>UB</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-              </tr>
-              <tr>
-                <td>NON-UB</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-              </tr>
-            </table>
-          </div>
-        </div>
+      <button type="button" class="collapsible">Manpower</button>
+      <div class="content p-2">
+        <strong>DWH FINAL TABLE</strong>
+        <table>
+          <tr>
+            <th>BU</th>
+            <th>NEW</th>
+            <th>UPDATE</th>
+            <th>TERMINATE</th>
+          </tr>
+          <tr>
+            <td>UB</td>
+            <td id="dwh-new-ub">
+              <div id="dwh-new-ub-spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </td>
+            <td id="dwh-updt-ub">
+              <div id="dwh-updt-ub-spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </td>
+            <td id="dwh-terminated-ub">
+              <div id="dwh-terminated-ub-spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>NON-UB</td>
+            <td id="dwh-new-non-ub">
+              <div id="dwh-new-non-ub-spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </td>
+            <td id="dwh-updt-non-ub">
+              <div id="dwh-updt-non-ub-spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </td>
+            <td id="dwh-terminated-non-ub">
+              <div id="dwh-terminated-non-ub-spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+           </td>
+          </tr>
+        </table>
+        <br>
+        <strong>PUSHED TO LSQ</strong>
+        <table>
+          <tr>
+            <th>BU</th>
+            <th>NEW</th>
+            <th>UPDATE</th>
+            <th>TERMINATE</th>
+          </tr>
+          <tr>
+            <td>UB</td>
+            <td id="lsq-new-ub">
+              <div id="lsq-new-ub-spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+            </div>
+           </td>
+            <td id="lsq-updt-ub">
+              <div id="lsq-updt-ub-spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </td>
+            <td id="lsq-terminated-ub">
+              <div id="lsq-terminated-ub-spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>NON-UB</td>
+            <td id="lsq-new-non-ub">
+              <div id="lsq-new-non-ub-spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </td>
+            <td id="lsq-updt-non-ub">
+              <div id="lsq-updt-non--spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </td>
+            <td id="lsq-terminated-non-ub">
+              <div id="lsq-terminated-non-ub-spinner" class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <button type="button" class="collapsible mt-2">RSA</button>
+      <div class="content p-2">
+        <strong>DWH FINAL TABLE</strong>
+        <table border="1">
+          Yet to be prepared
+        </table>
+      </div>
     </div>
 
     <script>
-        document.getElementById("datepicker").addEventListener("change", function() {
-          console.log("Selected Date:", this.value);
-        });
-      </script>
+      $(document).ready(function () {
+        // Define API URLs for environments
+        var envHost = {
+          prod: "https://api.bajajauto.com/dwh-sapi",
+          dev: "https://apidev.bajajauto.com/dwh-sapi-dev",
+        };
 
-    <script>
-      var coll = document.getElementsByClassName("collapsible");
-      var i;
+        var selectedEnv = $("#envSelect").val();
+        var selectedDate = $("#datepicker").val();
 
-      for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function () {
-          this.classList.toggle("active");
-          var content = this.nextElementSibling;
-          if (content.style.display === "block") {
-            content.style.display = "none";
-          } else {
-            content.style.display = "block";
+        function fetchData() {
+          
+          $("#dwh-new-ub-spinner").show();
+          $("#dwh-updt-ub-spinner").show();
+          $("#dwh-terminated-ub-spinner").show();
+          $("#dwh-new-non-ub-spinner").show();
+          $("#dwh-updt-non-ub-spinner").show();
+          $("#dwh-terminated-non-ub-spinner").show();
+          $("#lsq-new-ub-spinner").show();
+          $("#lsq-updt-ub-spinner").show();
+          $("#lsq-terminated-ub-spinner").show();
+          $("#lsq-new-non-ub-spinner").show();
+          $("#lsq-updt-non-ub-spinner").show();
+          $("#lsq-terminated-non-ub-spinner").show();
+
+          if (!selectedDate) {
+            console.log("Please select a date.");
+            return;
           }
+
+          var apiUrl = envHost[selectedEnv] + "/api/v1/get-data";
+
+          console.log("Fetching data from:", apiUrl);
+          console.log("Selected Date:", selectedDate);
+
+          $.ajax({
+            url: apiUrl,
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify({
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU = 'UB'`,
+              message: "MANPOWER DATA",
+            }),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                $("#dwh-new-ub-spinner").hide();
+                $("#dwh-new-ub").html(data[0].count);
+              }
+              else{
+                $("#dwh-new-ub-spinner").hide();
+                $("#dwh-new-ub").html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
+
+          $.ajax({
+            url: apiUrl,
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify({
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU = 'UB'`,
+              message: "MANPOWER DATA",
+            }),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                $("#dwh-updt-ub-spinner").hide();
+                $("#dwh-updt-ub").html(data[0].count);
+              }
+              else{
+                $("#dwh-updt-ub-spinner").hide();
+                $("#dwh-updt-ub").html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
+
+          $.ajax({
+            url: apiUrl,
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify({
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU = 'UB'`,
+              message: "MANPOWER DATA",
+            }),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                $("#dwh-terminated-ub-spinner").hide();
+                $("#dwh-terminated-ub").html(data[0].count);
+              }
+              else{
+                $("#dwh-terminated-ub-spinner").hide();
+                $("#dwh-terminated-ub").html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
+
+          $.ajax({
+            url: apiUrl,
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify({
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU != 'UB'`,
+              message: "MANPOWER DATA",
+            }),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                $("#dwh-new-non-ub-spinner").hide();
+                $("#dwh-new-non-ub").html(data[0].count);
+              }
+              else{
+                $("#dwh-new-non-ub-spinner").hide();
+                $("#dwh-new-non-ub").html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
+
+          $.ajax({
+            url: apiUrl,
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify({
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU != 'UB'`,
+              message: "MANPOWER DATA",
+            }),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                $("#dwh-updt-non-ub-spinner").hide();
+                $("#dwh-updt-non-ub").html(data[0].count);
+              }
+              else{
+                $("#dwh-updt-non-ub-spinner").hide();
+                $("#dwh-updt-non-ub").html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
+
+          $.ajax({
+            url: apiUrl,
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify({
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU != 'UB'`,
+              message: "MANPOWER DATA",
+            }),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                $("#dwh-terminated-non-ub-spinner").hide();
+                $("#dwh-terminated-non-ub").html(data[0].count);
+              }
+              else{
+                $("#dwh-terminated-non-ub-spinner").hide();
+                $("#dwh-terminated-non-ub").html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
+
+          $.ajax({
+            url: apiUrl,
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify({
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU = 'UB' AND IsLSQPushed = 'Y'`,
+              message: "MANPOWER DATA",
+            }),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                $("#lsq-new-ub-spinner").hide();
+                $("#lsq-new-ub").html(data[0].count);
+              }
+              else
+              {
+                $("#lsq-new-ub-spinner").hide();
+                $("#lsq-new-ub").html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
+
+          $.ajax({
+            url: apiUrl,
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify({
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU = 'UB' AND IsLSQPushed = 'Y'`,
+              message: "MANPOWER DATA",
+            }),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                $("#lsq-updt-ub-spinner").hide();
+                $("#lsq-updt-ub").html(data[0].count);
+              }
+              else{
+                $("#lsq-updt-ub-spinner").hide();
+                $("#lsq-updt-ub").html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
+
+          $.ajax({
+            url: apiUrl,
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify({
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU = 'UB' AND IsLSQPushed = 'Y'`,
+              message: "MANPOWER DATA",
+            }),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                $("#lsq-terminated-ub-spinner").hide();
+                $("#lsq-terminated-ub").html(data[0].count);
+              }
+              else
+              {
+                $("#lsq-terminated-ub-spinner").hide();
+                $("#lsq-terminated-ub").html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
+
+          $.ajax({
+            url: apiUrl,
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify({
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU != 'UB' AND IsLSQPushed = 'Y'`,
+              message: "MANPOWER DATA",
+            }),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                $("#lsq-new-non-ub-spinner").hide();
+                $("#lsq-new-non-ub").html(data[0].count);
+              }
+              else
+              {
+                $("#lsq-new-non-ub-spinner").hide();
+                $("#lsq-new-non-ub").html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
+
+          $.ajax({
+            url: apiUrl,
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify({
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU != 'UB' AND IsLSQPushed = 'Y'`,
+              message: "MANPOWER DATA",
+            }),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                $("#lsq-updt-non-ub-spinner").hide();
+                $("#lsq-updt-non-ub").html(data[0].count);
+              }
+              else{
+                $("#lsq-updt-non-ub-spinner").hide();
+                $("#lsq-updt-non-ub").html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
+
+          $.ajax({
+            url: apiUrl,
+            type: "POST",
+            contentType: "application/json",
+            headers: {
+              client_id: "6b5cb7c7c23241efb39b2304769ecea5",
+              client_secret: "95EF718e1ed64c3a980926174214B379",
+            },
+            data: JSON.stringify({
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU != 'UB' AND IsLSQPushed = 'Y'`,
+              message: "MANPOWER DATA",
+            }),
+            success: function (response) {
+              var data = response.data;
+              if (Array.isArray(data) && data.length > 0) {
+                $("#lsq-terminated-non-ub-spinner").hide();
+                $("#lsq-terminated-non-ub").html(data[0].count);
+              }
+              else{
+                $("#lsq-terminated-non-ub-spinner").hide();
+                $("#lsq-terminated-non-ub").html("<pre>No data found</pre>");
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error fetching data:", error);
+            },
+          });
+        }
+
+        // Call fetchData() when environment changes
+        $("#envSelect").change(function () {
+          selectedEnv = $(this).val();
+          fetchData();
         });
-      }
+
+        // Call fetchData() when date changes
+        $("#datepicker").change(function () {
+          selectedDate = $(this).val();
+          fetchData();
+        });
+
+        // Expand/Collapse sections
+        $(".collapsible").click(function () {
+          $(this).toggleClass("active");
+          $(this).next(".content").slideToggle();
+        });
+      });
     </script>
   </body>
 </html>
