@@ -70,7 +70,7 @@
       <label for="envSelect">Environment:</label>
       <select id="envSelect">
         <option value="dev">Development</option>
-        <option value="prod">Production</option>
+        <option value="prod" selected>Production</option>
       </select>
     </div>
 
@@ -191,8 +191,20 @@
           dev: "https://apidev.bajajauto.com/dwh-sapi-dev",
         };
 
-        var selectedEnv = $("#envSelect").val();
+        var selectedEnv = $("#envSelect").val() || "prod";
         var selectedDate = $("#datepicker").val();
+
+        // $(document).ready(function() {
+        var currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - 1); // Subtract 1 day
+
+        // Format the date as needed (YYYY-MM-DD for HTML5 date input)
+        var formattedDate = currentDate.toISOString().split('T')[0];
+
+        $("#datepicker").val(formattedDate);
+        selectedDate = formattedDate;
+
+        fetchData();
 
         function fetchData() {
           
@@ -228,7 +240,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU = 'UB'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU = 'UB'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -256,7 +268,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU = 'UB'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU = 'UB'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -284,7 +296,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU = 'UB'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU = 'UB'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -312,7 +324,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU != 'UB'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU != 'UB'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -340,7 +352,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU != 'UB'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU != 'UB'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -368,7 +380,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU != 'UB'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU != 'UB'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -396,7 +408,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU = 'UB' AND IsLSQPushed = 'Y'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU = 'UB' AND [Sales ASM Email] != '' AND IsLSQPushed = 'Y'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -425,7 +437,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU = 'UB' AND IsLSQPushed = 'Y'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU = 'UB' AND [Sales ASM Email] != '' AND IsLSQPushed = 'Y'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -453,7 +465,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU = 'UB' AND IsLSQPushed = 'Y'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU = 'UB' AND [Sales ASM Email] != '' AND IsLSQPushed = 'Y'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -482,7 +494,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU != 'UB' AND IsLSQPushed = 'Y'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU != 'UB' AND IsLSQPushed = 'Y'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -511,7 +523,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU != 'UB' AND IsLSQPushed = 'Y'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU != 'UB' AND IsLSQPushed = 'Y'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -539,7 +551,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = '${selectedDate}' AND CDMS_BU != 'UB' AND IsLSQPushed = 'Y'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU != 'UB' AND IsLSQPushed = 'Y'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
