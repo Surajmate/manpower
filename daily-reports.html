@@ -408,7 +408,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU = 'UB' AND [Sales ASM Email] != '' AND IsLSQPushed = 'Y'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_NEW WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU = 'UB' AND IsLSQPushed = 'Y'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -437,7 +437,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU = 'UB' AND [Sales ASM Email] != '' AND IsLSQPushed = 'Y'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_DATA_UPDT WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU = 'UB' AND IsLSQPushed = 'Y'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
@@ -465,7 +465,7 @@
               client_secret: "95EF718e1ed64c3a980926174214B379",
             },
             data: JSON.stringify({
-              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU = 'UB' AND [Sales ASM Email] != '' AND IsLSQPushed = 'Y'`,
+              query: `SELECT COUNT(*) as count FROM MPM_CDMS_LSQ_TERMINATED WHERE IsLSQLive = 1 AND Cast(DATALOADTIME as date) = CAST('${selectedDate}' as date) AND CDMS_BU = 'UB' AND IsLSQPushed = 'Y'`,
               message: "MANPOWER DATA",
             }),
             success: function (response) {
